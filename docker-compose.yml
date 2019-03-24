@@ -1,0 +1,27 @@
+version: '3.5'
+services:
+  pgd_postgres:
+    container_name: pgd_db
+    image: postgres:11.2
+#    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: db_user
+      POSTGRES_DB: db_name
+    ports:
+      - 5432:5432
+  pgd_golang:
+    container_name: pgd_app
+    build:
+      context: .
+#    restart: always
+    ports:
+      - 8080:8090
+    tty: true
+    depends_on:
+      - pgd_postgres
+    links:
+      - pgd_postgres
+#    extra_hosts:
+#      - "woinder_db:162.242.195.82"
+#      - "woinder_app:50.31.209.229"
