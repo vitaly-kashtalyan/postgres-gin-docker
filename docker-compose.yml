@@ -3,9 +3,9 @@ services:
   pgd_postgres:
     container_name: pgd_db
     image: postgres:11.2
-#    restart: always
+    restart: on-failure
     environment:
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: mypassword
       POSTGRES_USER: db_user
       POSTGRES_DB: db_name
     ports:
@@ -14,14 +14,11 @@ services:
     container_name: pgd_app
     build:
       context: .
-#    restart: always
+    restart: on-failure
     ports:
-      - 8080:8090
+      - 8080:8080
     tty: true
     depends_on:
       - pgd_postgres
     links:
       - pgd_postgres
-#    extra_hosts:
-#      - "woinder_db:162.242.195.82"
-#      - "woinder_app:50.31.209.229"
